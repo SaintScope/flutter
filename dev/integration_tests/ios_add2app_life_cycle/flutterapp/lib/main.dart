@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 
-VoidCallback? originalSemanticsListener;
+VoidCallback originalSemanticsListener;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,13 +39,13 @@ class _LifeCycleSpyState extends State<LifeCycleSpy> with WidgetsBindingObserver
     AppLifecycleState.inactive,
     AppLifecycleState.resumed,
   ];
-  List<AppLifecycleState?>? _actualLifeCycleSequence;
+  List<AppLifecycleState> _actualLifeCycleSequence;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    _actualLifeCycleSequence =  <AppLifecycleState?>[
+    _actualLifeCycleSequence =  <AppLifecycleState>[
       ServicesBinding.instance.lifecycleState,
     ];
   }
@@ -59,7 +59,7 @@ class _LifeCycleSpyState extends State<LifeCycleSpy> with WidgetsBindingObserver
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     setState(() {
-      _actualLifeCycleSequence = List<AppLifecycleState>.from(_actualLifeCycleSequence!);
+      _actualLifeCycleSequence = List<AppLifecycleState>.from(_actualLifeCycleSequence);
       _actualLifeCycleSequence?.add(state);
     });
   }
